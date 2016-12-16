@@ -59,7 +59,7 @@
   register: install_repo
 
 - name: Hold Graylog repository package
-  command: apt-mark hold graylog_repository
+  command: "apt-mark hold graylog-{{ graylog_version }}-repository"
   when: install_repo.changed
 
 - name: APT cache should be updated
