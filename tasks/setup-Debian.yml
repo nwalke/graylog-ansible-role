@@ -58,6 +58,10 @@
     dpkg_options: 'force-all'
   register: install_repo
 
+- name: Hold Graylog repository package
+  command: apt-mark hold graylog_repository
+  when: install_repo.changed
+
 - name: APT cache should be updated
   apt:
     update_cache: True
