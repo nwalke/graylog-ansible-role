@@ -7,3 +7,6 @@
   when: ansible_os_family == 'Debian'
 
 - include: server.yml
+
+- include: convert-SSL.yml
+  when: graylog_convert_ssl

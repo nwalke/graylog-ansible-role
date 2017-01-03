@@ -1,0 +1,15 @@
+---
+- name: Create directory to hold Graylog certs
+  file:
+    path: '/etc/graylog/ssl'
+    owner: graylog
+    group: graylog
+    mode: '0750'
+
+- name: Check if there's a cert we should use
+  stat:
+    path: "/etc/ssl/{{ ssl_certs_common_name }}"
+  register: graylog_ssl_cert_existing
+
+- debug:
+    msg: "Variable graylog_ssl_cert_existing: {{ graylog_ssl_cert_existing }}"
