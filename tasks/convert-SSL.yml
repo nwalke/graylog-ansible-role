@@ -20,3 +20,9 @@
   args:
     creates: "{{ graylog_ssl_directory }}/{{ ssl_certs_common_name }}.pem"
   when: graylog_ssl_cert_existing.stat.exists
+
+- name: Convert key to PKCS #8
+  shell: "openssl pkcs8 -topk8 -nocrypt -in {{ graylog_ssl_directory }}/{{ ssl_certs_common_name }}.key -out {{ graylog_ssl_directory }}/{{ ssl_certs_common_name }}.pkcs8"
+  args:
+    creates: "{{ graylog_ssl_directory}}/{{ ssl_certs_common_name }}.pkcs8"
+  when: graylog_ssl_cert_existing.stat.exists
