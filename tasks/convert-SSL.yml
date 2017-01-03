@@ -37,8 +37,8 @@
 
 - name: Set permissions on everything in our directory
   shell: "chmod -R 640 {{ graylog_ssl_directory }}/*"
-  when: graylog_pkcs8_key_stat.stat.mode is not 0640
+  when: graylog_pkcs8_key_stat.stat.mode != '0640'
 
 - name: Set owner and group on everything in our directory
   shell: "chown -R graylog:graylog {{ graylog_ssl_directory }}/*"
-  when: graylog_pkcs8_key_stat.stat.pw_name is not graylog
+  when: graylog_pkcs8_key_stat.stat.pw_name != 'graylog'
