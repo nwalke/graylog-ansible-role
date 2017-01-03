@@ -22,6 +22,8 @@ graylog_root_email:           ''
 graylog_root_timezone:        'UTC'
 graylog_alert_check_interval: 60
 graylog_disable_sigar:        'False'
+graylog_config_directory:     '/etc/graylog/'
+graylog_ssl_directory:        '{{ graylog_config_directory}}ssl'
 
 # REST
 graylog_rest_listen_uri:                   'http://0.0.0.0:9000/api/'

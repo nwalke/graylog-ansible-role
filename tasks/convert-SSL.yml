@@ -1,7 +1,7 @@
 ---
 - name: Create directory to hold Graylog certs
   file:
-    path: "/etc/graylog/ssl"
+    path: "{{ graylog_ssl_directory }}"
     state: directory
     owner: graylog
     group: graylog
@@ -16,5 +16,7 @@
     msg: "Variable graylog_ssl_cert_existing: {{ graylog_ssl_cert_existing }}"
 
 - name: Copy existing cert stuff
-  command: "cp -R /etc/ssl/{{ ssl_certs_common_name }}/ /etc/graylog/ssl/"
+  command: "cp -R /etc/ssl/{{ ssl_certs_common_name }}/* {{ graylog_ssl_directory }}/"
+  args:
+    creates: "{{ graylog_ssl_directory }}/{{ ssl_certs_common_name }}.pem"
   when: graylog_ssl_cert_existing.stat.exists
