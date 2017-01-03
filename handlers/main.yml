@@ -3,3 +3,12 @@
   service:
     name: 'graylog-server'
     state: restarted
+
+- name: set permissions on ssl directory
+  file:
+    path: "{{ graylog_ssl_directory}}"
+    mode: '0640'
+    owner: graylog
+    group: graylog
+    recurse: yes
+    state: directory

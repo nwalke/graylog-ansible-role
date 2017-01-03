@@ -5,7 +5,8 @@
     state: directory
     owner: graylog
     group: graylog
-    mode: '0750'
+    mode: '0640'
+    recurse: yes
 
 - name: Check if there's a cert we should use
   stat:
@@ -20,25 +21,11 @@
   args:
     creates: "{{ graylog_ssl_directory }}/{{ ssl_certs_common_name }}.pem"
   when: graylog_ssl_cert_existing.stat.exists
+  notify: set permissions on ssl directory
 
 - name: Convert key to PKCS #8
   shell: "openssl pkcs8 -topk8 -nocrypt -in {{ graylog_ssl_directory }}/{{ ssl_certs_common_name }}.key -out {{ graylog_ssl_directory }}/{{ ssl_certs_common_name }}.pkcs8"
   args:
     creates: "{{ graylog_ssl_directory}}/{{ ssl_certs_common_name }}.pkcs8"
   when: graylog_ssl_cert_existing.stat.exists
-
-- name: Check permissions on new key
-  stat:
-    path: "{{ graylog_ssl_directory }}/{{ ssl_certs_common_name }}.pkcs8"
-  register: graylog_pkcs8_key_stat
-
-- debug:
-    msg: "Variable graylog_pkcs8_key_stat: {{ graylog_pkcs8_key_stat }}"
-
-- name: Set permissions on everything in our directory
-  shell: "chmod -R 640 {{ graylog_ssl_directory }}/*"
-  when: graylog_pkcs8_key_stat.stat.mode != '0640'
-
-- name: Set owner and group on everything in our directory
-  shell: "chown -R graylog:graylog {{ graylog_ssl_directory }}/*"
-  when: graylog_pkcs8_key_stat.stat.pw_name != 'graylog'
+  notify: set permissions on ssl directory
