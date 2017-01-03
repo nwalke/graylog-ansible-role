@@ -2,6 +2,7 @@
 - name: Create directory to hold Graylog certs
   file:
     path: '/etc/graylog/ssl'
+    state: directory
     owner: graylog
     group: graylog
     mode: '0750'
