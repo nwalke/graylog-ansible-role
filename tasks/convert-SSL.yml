@@ -26,3 +26,14 @@
   args:
     creates: "{{ graylog_ssl_directory}}/{{ ssl_certs_common_name }}.pkcs8"
   when: graylog_ssl_cert_existing.stat.exists
+
+- name: Check permissions on new key
+  stat:
+    path: "{{ graylog_ssl_directory }}/{{ ssl_certs_common_name }}.pkcs8"
+  register: graylog_pkcs8_key_stat
+
+- debug:
+  msg: "{{ graylog_pkcs8_key_stat }}"
+# 
+# - name: Set permissions on everything in our directory
+#   shell: "chmod -R 640 {{ graylog_ssl_directory }}/*"
