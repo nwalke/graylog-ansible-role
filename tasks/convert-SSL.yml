@@ -16,9 +16,5 @@
     msg: "Variable graylog_ssl_cert_existing: {{ graylog_ssl_cert_existing }}"
 
 - name: Copy existing cert stuff
-  copy:
-    src: "/etc/ssl/{{ ssl_certs_common_name }}/"
-    dest: "/etc/graylog/ssl/"
-    remote_src: yes
-    directory_mode: yes
+  command: "cp -R /etc/ssl/{{ ssl_certs_common_name }}/ /etc/graylog/ssl/""
   when: graylog_ssl_cert_existing.stat.exists
