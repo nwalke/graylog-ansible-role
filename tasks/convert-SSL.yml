@@ -5,7 +5,7 @@
     state: directory
     owner: graylog
     group: graylog
-    mode: '0640'
+    mode: '0740'
     recurse: yes
 
 - name: Check if there's a cert we should use

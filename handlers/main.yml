@@ -7,7 +7,7 @@
 - name: set permissions on ssl directory
   file:
     path: "{{ graylog_ssl_directory}}"
-    mode: '0640'
+    mode: '0740'
     owner: graylog
     group: graylog
     recurse: yes
