@@ -33,7 +33,7 @@
   register: graylog_pkcs8_key_stat
 
 - debug:
-    msg: "{{ graylog_pkcs8_key_stat }}"
+    msg: "Variable graylog_pkcs8_key_stat: {{ graylog_pkcs8_key_stat }}"
 
 - name: Set permissions on everything in our directory
   shell: "chmod -R 640 {{ graylog_ssl_directory }}/*"
